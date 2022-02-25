@@ -1,0 +1,7 @@
+<launch>
+
+   <node pkg="ultrasonic" name="ultrasonic" type="ultrasonic.py" output="screen"/>
+
+   <node pkg="accelerometer" name="accelerometer" type="accelerometer.py" output="screen"/>
+
+</launch>
