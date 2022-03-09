@@ -1,7 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #Libraries
 import RPi.GPIO as GPIO
 import time
+import rospy
+from std_msgs.msg import Float32
  
 #GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
@@ -40,16 +42,23 @@ def distance():
     distance = (TimeElapsed * 34300) / 2
  
     return distance
+
+def ultrasonic_talker():
+    publisher = rospy.Publisher('ultrasonic_topic', Float32, queue_size=10)
+    rospy.init_node('ultrasonic', anonymous=True)
+    rate = rospy.Rate(100) #100Hz
+    while not rospy.is_shutdown():
+        dist = distance()
+        rospy.loginfo(dist)
+        publisher.publish(dist)
+        rate.sleep()
  
 if __name__ == '__main__':
     print ("ultrasonic working")
     try:
-        while True:
-            dist = distance()
-            print ("Measured Distance = %.1f cm" % dist)
-            time.sleep(0.1)
+        ultrasonic_talker()
  
-        # Reset by pressing CTRL + C
-    except KeyboardInterrupt:
-        print("Measurement stopped by User")
+    # Reset by pressing CTRL + C
+    except rospy.ROSInterruptException:
         GPIO.cleanup()
+        pass

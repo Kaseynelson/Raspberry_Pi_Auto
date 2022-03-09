@@ -1,0 +1,7 @@
+<launch>
+
+   <node pkg="ultrasonic" name="ultrasonic" type="ultrasonic_talker.py" output="screen"/>
+
+   <node pkg="motor" name="motor" type="motor_listener.py" output="screen"/>
+   
+</launch>

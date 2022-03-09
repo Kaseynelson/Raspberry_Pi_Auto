@@ -4,19 +4,20 @@ import time
 GPIO.setmode(GPIO.BOARD)
 
 #define pin, frequency and duty cycle
-PWN_pin = 36
+PWM_pin = 7
 frequency = 100*pow(10, 3)
-dutyCycle = 10
+dutyCycle = 4
 
 #configure pin for output
-GPIO.setup(PWN_pin, GPIO.OUT)
+GPIO.setup(PWM_pin, GPIO.OUT)
 
 #create PWM instance for pin w frequency
-pwm = GPIO.PWM(PWN_pin, frequency)
-
+pwm = GPIO.PWM(PWM_pin, frequency)
 #start the PWM object
 pwm.start(dutyCycle)
-time.sleep(5)
+time.sleep(2)
+pwm.ChangeDutyCycle(8)
+time.sleep(2)
 
 #stop the output for the PWM pin
 pwm.stop()

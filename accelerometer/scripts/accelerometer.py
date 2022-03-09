@@ -11,4 +11,4 @@ while True:
     print("Gyro X:%.2f, Y: %.2f, Z: %.2f rad/s" % (mpu.gyro))
     print("Temperature: %.2f C" % mpu.temperature)
     print("")
-    time.sleep(1)
+    time.sleep(0.2)

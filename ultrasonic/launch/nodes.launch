@@ -4,4 +4,6 @@
 
    <node pkg="accelerometer" name="accelerometer" type="accelerometer.py" output="screen"/>
 
+   <node pkg="lineTracker" name="lineTracker" type="lineTracker.py" output="screen"/>
+   
 </launch>
