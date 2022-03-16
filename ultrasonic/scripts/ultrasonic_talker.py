@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 import time
 import rospy
+import numpy
 from std_msgs.msg import Float32
  
 #GPIO Mode (BOARD / BCM)
@@ -46,11 +47,21 @@ def distance():
 def ultrasonic_talker():
     publisher = rospy.Publisher('ultrasonic_topic', Float32, queue_size=10)
     rospy.init_node('ultrasonic', anonymous=True)
-    rate = rospy.Rate(100) #100Hz
+    rate = rospy.Rate(1000) #1000Hz
+    size = 10
+    distArray = numpy.empty(size, dtype=float)
+    i = 0
     while not rospy.is_shutdown():
         dist = distance()
-        rospy.loginfo(dist)
-        publisher.publish(dist)
+        distArray[i] = dist
+        i += 1
+        if i == size:
+            i = 0
+            avgDist = numpy.mean(distArray)
+            publisher.publish(avgDist)
+            rospy.loginfo(avgDist)
+        #rospy.loginfo(dist)
+        #publisher.publish(dist)
         rate.sleep()
  
 if __name__ == '__main__':
