@@ -1,18 +1,44 @@
+#!/usr/bin/env python
+import math
 from board import SCL, SDA
 import busio
-
-# Import the PCA9685 module.
 from adafruit_pca9685 import PCA9685
+import time
 
-# Create the I2C bus interface.
-i2c_bus = busio.I2C(SCL, SDA)
 
-# Create a simple PCA9685 class instance.
-pca = PCA9685(i2c_bus)
+def Servo_Initialize():
+   i2c = busio.I2C(SCL, SDA)
+   pca = PCA9685(i2c)
+   pca.frequency = 100
+   return pca
 
-# Set the PWM frequency to 60hz.
-pca.frequency = 60
 
-# Set the PWM duty cycle for channel zero to 50%. duty_cycle is 16 bits to match other PWM objects
-# but the PCA9685 will only actually give 12 bits of resolution.
-pca.channels[7].duty_cycle = 0x7FFF
+def Motor_StartUp(pca):
+    print('Starting Motor Start Up Sequence')
+    pca.channels[11].duty_cycle = math.floor(.15*65535)
+    time.sleep(5)
+    pca.channels[11].duty_cycle = math.floor(.2*65535)
+    time.sleep(3)
+    pca.channels[11].duty_cycle = math.floor(.15*65535)
+    time.sleep(3)
+    pca.channels[11].duty_cycle = math.floor(.1*65535)
+    time.sleep(3)
+    pca.channels[11].duty_cycle = math.floor(.15*65535)
+    time.sleep(3)
+    print('Start Up Complete')
+
+def Motor_Speed(pca, percent, channel = 11):
+    pca.channels[channel].duty_cycle = math.floor(percent*65535)
+    print(percent)
+
+pca = Servo_Initialize()
+#Motor_StartUp(pca)
+
+print('')
+print('Changing Speeds:')
+Motor_Speed(pca, 0.15, 11)
+time.sleep(5)
+Motor_Speed(pca, 0.16, 11)#pca.channels[11].duty_cycle = math.floor(.17*65535)
+time.sleep(5)
+#pca.channels[11].duty_cycle = math.floor(.15*65535)
+Motor_Speed(pca, 0.15, 11)

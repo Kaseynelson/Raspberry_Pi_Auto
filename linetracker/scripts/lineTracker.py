@@ -9,9 +9,11 @@ line_sensor4 = gpiozero.DigitalInputDevice(19)
 line_sensor5 = gpiozero.DigitalInputDevice(26)
 
 while True:
-    if line_sensor1.is_active == False:
-        print("Line detected")
+    if line_sensor2.is_active == False:
+        print("Line detected left")
+    elif line_sensor4.is_active == False:
+        print("Line detected right")
     else:
-        print("Line not detected")
+        print("Going forward")
         
     time.sleep(0.01)
