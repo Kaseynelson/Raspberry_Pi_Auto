@@ -45,13 +45,13 @@ def distance():
     return distance
 
 def ultrasonic_talker():
-    publisher = rospy.Publisher('ultrasonic_topic', Float32, queue_size=10)
+    publisher = rospy.Publisher('ultrasonic_topic', Float32)
     rospy.init_node('ultrasonic', anonymous=True)
-    rate = rospy.Rate(5000) #5000Hz
-    size = 10
+    rate = rospy.Rate(30) #30Hz
+    size = 3
     distArray = numpy.empty(size, dtype=float)
     i = 0
-    while not rospy.is_shutdown():
+    while True:
         distArray[i] = distance()
         i += 1
         if i == size:
