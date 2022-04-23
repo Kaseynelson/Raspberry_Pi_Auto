@@ -7,10 +7,6 @@ import time
 import adafruit_motor.servo
 
 def Sero_Motor_Initialization():
-    # Libaries provide by Adafruit
-    # https://learn.adafruit.com/16-channel-pwm-servo-driver/python-circuitpython
-    # https://github.com/adafruit/Adafruit_CircuitPython_PCA9685
-    # Create busio i2C bus instance to communicate with driver.
     i2c_bus = busio.I2C(SCL,SDA)
     # Start Communicating with Driver
     pca =PCA9685(i2c_bus)

@@ -32,9 +32,9 @@ def linetracker_talker():
         chan3 = AnalogIn(mcp, MCP.P3)
         #chan4 = AnalogIn(mcp, MCP.P4)
        
-        if chan3.value > threshold:
+        if chan3.value < threshold:
             publisher.publish(1)
-        elif chan1.value > threshold:
+        elif chan1.value < threshold:
             publisher.publish(-1)
         else:
             publisher.publish(0)
