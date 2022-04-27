@@ -18,23 +18,23 @@ cs = digitalio.DigitalInOut(board.D5)
 # create the mcp object
 mcp = MCP.MCP3008(spi, cs)
 
-threshold = 40000
+threshold = 32000
 
 def linetracker_talker():
     publisher = rospy.Publisher('linetracker_topic', Int16)
     rospy.init_node('linetracker', anonymous=True)
-    rate = rospy.Rate(25) #25Hz
+    rate = rospy.Rate(150) #100Hz
     while True:
         # create an analog input channel on pin 0
-        #chan0 = AnalogIn(mcp, MCP.P0)
-        chan1 = AnalogIn(mcp, MCP.P1)
+        chan0 = AnalogIn(mcp, MCP.P0)
+        #chan1 = AnalogIn(mcp, MCP.P1)
         #chan2 = AnalogIn(mcp, MCP.P2)
-        chan3 = AnalogIn(mcp, MCP.P3)
-        #chan4 = AnalogIn(mcp, MCP.P4)
+        #chan3 = AnalogIn(mcp, MCP.P3)
+        chan4 = AnalogIn(mcp, MCP.P4)
        
-        if chan3.value < threshold:
+        if chan4.value < threshold:
             publisher.publish(1)
-        elif chan1.value < threshold:
+        elif chan0.value < threshold:
             publisher.publish(-1)
         else:
             publisher.publish(0)

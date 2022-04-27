@@ -52,26 +52,25 @@ def Motor_Speed(pca, percent, channel = 11):
 
 def ultrasonic_callback(data):
     rospy.loginfo(rospy.get_caller_id() + " distance: %.3f", data.data)
-    if (data.data < 40):
+    if (data.data < 100):
         Steering(pca, 0)
-        #delta_time(0.5)
-        #Steering(pca,60)
+        delta_time(0.16)
+        Steering(pca,60)
 
 def linetracker_callback(data):
     rospy.loginfo(rospy.get_caller_id() + " line tracker value: %i", data.data)
     if (data.data == -1):
-        Steering(pca, 70)
-        #delta_time(0.5)
+        Steering(pca, 80)
+        #delta_time(0.1)
         #Steering(pca, 60)
     elif (data.data == 1):
-        Steering(pca, 50)
-        #delta_time(0.5)
+        Steering(pca, 60)
+        #delta_time(0.1)
         #Steering(pca, 60)
 
-Motor_StartUp(pca)
-Motor_Speed(pca, 0.165, 11)
-time.sleep(0.5)
-Steering(pca, 60)
+#Motor_StartUp(pca)
+Motor_Speed(pca, 0.1645, 11)
+Steering(pca, 70)
 
 if __name__== '__main__':
     try:
